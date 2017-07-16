@@ -16,6 +16,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <ncurses.h>
+#include <getopt.h>
 #include <taglib/tag_c.h>
 
 
@@ -72,6 +73,36 @@ void fail_exit(const char *msg);
   ({ typeof(a) _a = a;    \
      typeof(b) _b = b;    \
      _a > _b ? _a : _b; })
+
+
+#define VERSION_METAG        "Alpha"
+#define HELP_STRING_METAG    "Utilisation : metag [OPTION]...\n"         \
+  "Editeur de tag mp3"                                                   \
+  "Options :\n"                                                          \
+  "\t\t--help -h                        Affiche l'aide simple\n"         \
+  "\t\t--version -v                     Affiche la version\n"            \
+  "\t\t--dir -d                         Change le répertoire de travail\n"\
+  "\n"                                                                   \
+  "Basic control :\n"                                                    \
+  "  'e%'   - edit % where % can be :\n"                                 \
+  "           t for title | a for artist    | b for album | g for genre" \
+  "           y for year  | y for comment   | n for track number"        \
+  ""                                                                     \
+  "  'q' to exit"                                                        \
+  ""                                                                     \
+  "  's' select by regex"                                                \
+  ""                                                                     \
+  "  'x' extract information from the title by regex"                    \
+  ""                                                                     \
+  "  ' ' toggle selection of the current item"                           \
+  ""                                                                     \
+  "  'k' selection up"                                                   \
+  "  'j' selection down"                                                 \
+  ""
+
+
+
+
 
 
 

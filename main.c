@@ -49,7 +49,7 @@ void fail_exit(const char *msg) {
 }
 
 
-
+void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c);
 
 void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c) {
     status[1]=c;
@@ -81,6 +81,50 @@ void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c) {
 }
 
 int main(int argc, char* argv[]){
+
+    while (1) {
+        int c;
+        int optIndex = 0;
+        static struct option optlv[] = {
+            {"help",     no_argument,           0,  'h' },
+            {"version",  no_argument,           0,  'v'  },
+            {"dir",    required_argument,       0,  'd' },
+            {NULL,       0,                     0,   0  }
+        };
+
+
+        c = getopt_long(argc, argv, "hvd:", optlv, &optIndex);
+        if (c == -1)
+            break;
+
+        switch (c) {
+            case 'v':
+            if( !strcmp(optlv[optIndex].name, "version") ) {
+                puts( VERSION_METAG );
+            }
+            break;
+
+            case 'h':
+                puts( HELP_STRING_METAG );
+                return EXIT_SUCCESS;
+
+            break;
+            case 'c':
+                if( optarg ) {
+
+                } else {
+                    fprintf(stderr, "Veuillez indiquer un directory\n");
+                }
+            break;
+            case '?':
+            default:
+                return EXIT_FAILURE;
+        }
+    }
+
+
+
+
     itemC* menuL = NULL;
     int size = 0;
     int c;

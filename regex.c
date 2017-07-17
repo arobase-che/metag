@@ -101,6 +101,19 @@ void regexSelection(menuC* menu, const char* msg) {
         }
     }
 }
+void regexXtracts(menuC* menu, const char* msg) {
+    int hasSelect = 0;
+    for(int i = 0 ; i < menu->nbElem ; i++ ) {
+        if( menu->list[i].selected == 1 ) {
+            regexXtract(&(menu->list[i]), msg);
+            hasSelect = 1;
+        }
+    }
+    if( !hasSelect ) {
+        regexXtract(&menu->list[menu->hl], msg);
+    }
+
+}
 /*
  * Example regex : 
  *

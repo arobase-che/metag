@@ -261,7 +261,7 @@ int main(int argc, char* argv[]){
                 break;
             case 'x':
                 prepare("x");
-                regexXtract(&menu.list[menu.hl], msg_win_str);
+                regexXtracts(&menu, msg_win_str);
                 resizeMain(&menu);
                 break;
             case 'q':

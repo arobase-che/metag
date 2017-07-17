@@ -1,5 +1,3 @@
-
-
 #include "main.h"
 #include "regex.h"
 #include "readline.h"
@@ -67,13 +65,60 @@ void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c) {
             if( menu->list[i].selected )
                 selected = 1;
         if( ! selected && ! it->opt ) {
+#ifdef DEBUG
             mvprintc(20, 20, "H$1e$2l$3l$4o", 10);
+#endif
             func(it->info.tag, msg_win_str);
             taglib_file_save(it->info.file);
         }else{
             for(int i = 0 ; i < menu->nbElem ; i++)
                 if( menu->list[i].selected && !menu->list[i].opt ) {
                     func(menu->list[i].info.tag, msg_win_str);
+                    taglib_file_save(menu->list[i].info.file);
+                }
+        }
+    }
+}
+void edit_rl_int(menuC* menu,void func(TagLib_Tag *, unsigned int), int c) {
+    status[1]=c;
+    printStatus();
+    refresh();
+    curs_set(2);
+    move(LINES-1, 0);
+    readline_n();
+    clear();
+    curs_set(0);
+    itemC* it = menu->list+menu->hl;
+
+    int res = -1;
+    {
+        int t = 0;
+        int r = sscanf(msg_win_str, "%u", &t);
+        if( r == 1 )
+            res = t;
+        else {
+            return;
+        }
+
+
+
+    }
+
+    if( msg_win_str) {
+        int selected = 0;
+        for(int i = 0 ; i < menu->nbElem ; i++)
+            if( menu->list[i].selected )
+                selected = 1;
+        if( ! selected && ! it->opt ) {
+#ifdef DEBUG
+            mvprintc(20, 20, "H$1e$2l$3l$4o", 10);
+#endif
+            func(it->info.tag, res);
+            taglib_file_save(it->info.file);
+        }else{
+            for(int i = 0 ; i < menu->nbElem ; i++)
+                if( menu->list[i].selected && !menu->list[i].opt ) {
+                    func(menu->list[i].info.tag, res);
                     taglib_file_save(menu->list[i].info.file);
                 }
         }
@@ -255,8 +300,10 @@ int main(int argc, char* argv[]){
                     edit_rl(&menu,taglib_tag_set_album,'b');
                     break;
                 case 'y':
+                    edit_rl_int(&menu,taglib_tag_set_year,'b');
                     break;
                 case 'n':
+                    edit_rl_int(&menu,taglib_tag_set_track,'b');
                     break;
                 case 'g':
                     edit_rl(&menu,taglib_tag_set_genre,'g');

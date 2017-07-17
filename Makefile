@@ -25,10 +25,10 @@ $(PROG): main.c main.h $(OBJ_FILES)
 .PHONY: clean mrproper
 
 clean:
-	rm $(OBJ_FILES)
+	rm -f $(OBJ_FILES)
 
 mrproper: clean
-	rm ./$(PROG)
+	rm -f ./$(PROG)
 
 
 install: todo
@@ -36,5 +36,5 @@ install: todo
 	echo 'Installation success'
 
 uninstall: /usr/bin/$(PROG)
-	rm /usr/bin/$(PROG)
+	rm -f /usr/bin/$(PROG)
 

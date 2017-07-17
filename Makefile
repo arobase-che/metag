@@ -31,9 +31,9 @@ mrproper: clean
 	rm -f ./$(PROG)
 
 
-install: todo
-	[ -e /usr/bin/$(PROG) ] && sudo cp $(PROG) /usr/bin/$(PROG)
-	echo 'Installation success'
+install: $(PROG)
+	cp $(PROG) /usr/bin/$(PROG)
+	@echo 'Installation success'
 
 uninstall: /usr/bin/$(PROG)
 	rm -f /usr/bin/$(PROG)

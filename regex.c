@@ -101,11 +101,19 @@ void regexSelection(menuC* menu, const char* msg) {
         }
     }
 }
+/*
+ * Example regex : 
+ *
+ *       ^([a-Z0-9 ]+) - ([^\[]+)\[([0-9]+)\]/atn
+ *       (Daft Punk) - Something about us[11].mp3
+
+ */
 void regexXtract(itemC* it, const char* msg) {
-    char* tmp = strrchr( msg , '/' );
-    if( !msg || !*msg || !tmp) {
+    if( !msg || !*msg) {
         return;
     }
+    char* tmp = strrchr( msg , '/' );
+    if( !tmp ) return;
 
     char *regexS = malloc(tmp-msg+1);
 
@@ -118,9 +126,13 @@ void regexXtract(itemC* it, const char* msg) {
     int nbR = strlen(tmp);
     tab = malloc( sizeof *tab * (nbR+1));
     if( match_regex(regexS, line, tab, nbR ) ) {
+#ifdef DEBUG
         fprintf(stderr, "Hello");
+#endif
         for(int i = 0 ; i < nbR ; i++) {
+#ifdef DEBUG
             fprintf(stderr, "<<%s>>\n", tab[i]);
+#endif
             switch(tmp[i]) {
                 case 't':
                     taglib_tag_set_title(it->info.tag, tab[i]);
@@ -132,8 +144,20 @@ void regexXtract(itemC* it, const char* msg) {
                     taglib_tag_set_album(it->info.tag, tab[i]);
                     break;
                 case 'y':
+                    {
+                        unsigned int t = 0;
+                        int r = sscanf(tab[i], "%u", &t);
+                        if( r == 1)
+                            taglib_tag_set_year(it->info.tag, t);
                     break;
+                    }
                 case 'n':
+                    {
+                        unsigned int t = 0;
+                        int r = sscanf(tab[i], "%u", &t);
+                        if( r == 1)
+                            taglib_tag_set_track(it->info.tag, t);
+                    }
                     break;
                 case 'g':
                     taglib_tag_set_genre(it->info.tag, tab[i]);

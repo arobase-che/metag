@@ -27,10 +27,14 @@ void printfc(char* fstrc, int max_length, ...) {
                             }else
                                 attrset( COLOR_PAIR(fstrc[i+1]-'0') | A_NORMAL);
                         }else{
+#ifdef DEBUG
                             fprintf(stderr,"%c isn't a color, skipping", fstrc[i+1]);
+#endif
                         }
                     }else{
+#ifdef DEBUG
                         fprintf(stderr,"end of line by '$', expect a color after '$'");
+#endif
                         return;
                     }
                     i+=2;
@@ -41,7 +45,9 @@ void printfc(char* fstrc, int max_length, ...) {
                         char format[10] = "%";
                         while(j < 9 && !strchr("diouxXeEfFgGaAcsp%", format[j] = fstrc[i+j]) );
                         if( j == 9 ) {
+#ifdef DEBUG
                             fprintf(stderr,"format too long %s...",format);
+#endif
                             return;
                         }
                         if( strchr("di", format[j] ) ) {
@@ -104,10 +110,14 @@ void printc(char* fstrc, int max_length) {
                             }else
                                 attrset( COLOR_PAIR(fstrc[i+1]-'0') | A_NORMAL);
                         }else{
+#ifdef DEBUG
                             fprintf(stderr,"%c isn't a color, skipping", fstrc[i+1]);
+#endif                            
                         }
                     }else{
+#ifdef DEBUG
                         fprintf(stderr,"end of line by '$', expect a color after '$'");
+#endif
                         return;
                     }
                     i+=2;

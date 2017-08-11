@@ -205,7 +205,7 @@ int main(int argc, char* argv[]){
     } else {
         chdir(argv[1]);
         listdir(0,&menuL, &size);
-        puts(argv[1]);
+        mvprintc(0,0, argv[1], COLS/2);
     }
     qsort(menuL, size, sizeof *menuL, sort_i);
 

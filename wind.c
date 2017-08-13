@@ -1,5 +1,10 @@
+/*
+ * Ache - 2017-08-14 - GPLv3
+ */
 
 #include "wind.h"
+
+/* Managed windows */
 
 
 

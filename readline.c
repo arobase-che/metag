@@ -1,6 +1,9 @@
-
 #include "readline.h"
 
+
+/* 
+ * Sets of functions to read a line with readline library and ncurses together
+ */
 
 
 static bool input_avail = false;

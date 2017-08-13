@@ -1,4 +1,13 @@
+/*
+ * Ache - 2017-08-14 - GPLv3
+ */
+
 #include "item.h"
+
+/*
+ * Set of functions to manage a list of items (One file or directory is
+ * an item).
+ */
 
 
 

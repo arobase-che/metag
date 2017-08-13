@@ -1,4 +1,14 @@
+/*
+ * Ache - 2017-08-14 - GPLv3
+ */
+
 #include "basic_curses.h"
+
+/*
+ * Set of functions to easy print on the ncurse interface
+ */
+
+
 
 void printfc(char* fstrc, int max_length, ...) {
     int i = 0;

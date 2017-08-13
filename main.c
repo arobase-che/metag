@@ -11,6 +11,10 @@
 #include "item.h"
 #include "wind.h"
 
+/*
+ * Entry point of metag and event loop
+ */
+
 
 #ifdef DEBUG
 

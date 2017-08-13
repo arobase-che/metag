@@ -127,6 +127,7 @@ void edit_rl_int(menuC* menu,void func(TagLib_Tag *, unsigned int), int c) {
 
 int main(int argc, char* argv[]){
 
+    /* Gestion des paramètres */
     while (1) {
         int c;
         int optIndex = 0;
@@ -154,9 +155,9 @@ int main(int argc, char* argv[]){
                 return EXIT_SUCCESS;
 
             break;
-            case 'c':
+            case 'd':
                 if( optarg ) {
-
+                    chdir(optarg);
                 } else {
                     fprintf(stderr, "Veuillez indiquer un directory\n");
                 }
@@ -170,6 +171,7 @@ int main(int argc, char* argv[]){
 
 
 
+    /* Initialisation */
     itemC* menuL = NULL;
     int size = 0;
     int c;
@@ -200,18 +202,13 @@ int main(int argc, char* argv[]){
         init_pair( i+1, i, COLOR_BLACK);
     }
 
-    if( !argv[1] ) {
-        listdir(0,  &menuL, &size);
-    } else {
-        chdir(argv[1]);
-        listdir(0,&menuL, &size);
-        mvprintc(0,0, argv[1], COLS/2);
-    }
+    listdir(0,  &menuL, &size);
     qsort(menuL, size, sizeof *menuL, sort_i);
 
     menuC menu = (menuC) { menuL, size, 0, 0, 0, NULL, NULL, 1, 1, COLS/2-1, LINES-2};
 
 
+    /* Premier affichage */
 
     printmenu(&menu);
     printTagInfoHeader();
@@ -219,6 +216,7 @@ int main(int argc, char* argv[]){
     vline( ACS_VLINE, LINES-2)  ;
 
 
+    /* Event loop */
     while( c = getch() ) {
         if (c == KEY_RESIZE) {
             resizeMain(&menu);
@@ -227,13 +225,13 @@ int main(int argc, char* argv[]){
         switch( comp ) {
             case 0:
         switch (c) {
-            case KEY_SF:
+            case 'B':
             case 'j':
                 if( menu.hl < menu.nbElem-1 )
                     menu.hl++;
                 printTagInfo(&menu);
                 break;
-            case KEY_SR:
+            case 'A':
             case 'k':
                 if( menu.hl > 0)
                     menu.hl--;

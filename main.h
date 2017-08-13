@@ -76,28 +76,28 @@ void fail_exit(const char *msg);
 
 
 #define VERSION_METAG        "Alpha"
-#define HELP_STRING_METAG    "Utilisation : metag [OPTION]...\n"         \
-  "Editeur de tag mp3"                                                   \
-  "Options :\n"                                                          \
-  "\t\t--help -h                        Affiche l'aide simple\n"         \
-  "\t\t--version -v                     Affiche la version\n"            \
-  "\t\t--dir -d                         Change le répertoire de travail\n"\
-  "\n"                                                                   \
-  "Basic control :\n"                                                    \
-  "  'e%'   - edit % where % can be :\n"                                 \
-  "           t for title | a for artist    | b for album | g for genre" \
-  "           y for year  | y for comment   | n for track number"        \
-  ""                                                                     \
-  "  'q' to exit"                                                        \
-  ""                                                                     \
-  "  's' select by regex"                                                \
-  ""                                                                     \
-  "  'x' extract information from the title by regex"                    \
-  ""                                                                     \
-  "  ' ' toggle selection of the current item"                           \
-  ""                                                                     \
-  "  'k' selection up"                                                   \
-  "  'j' selection down"                                                 \
+#define HELP_STRING_METAG    "Utilisation : metag [OPTION]..."               "\n"\
+  "Editeur de tag mp3"                                                       "\n"\
+  "Options :"                                                                "\n"\
+  "\t\t--help -h                        Affiche l'aide simple"               "\n"\
+  "\t\t--version -v                     Affiche la version"                  "\n"\
+  "\t\t--dir -d                         Change le répertoire de travail  "   "\n"\
+  "\n"                                                                       "\n"\
+  "Basic control :\n"                                                        "\n"\
+  "  'e%'   - edit % where % can be :\n"                                     "\n"\
+  "           t for title | a for artist    | b for album | g for genre"     "\n"\
+  "           y for year  | y for comment   | n for track number"            "\n"\
+  ""                                                                         "\n"\
+  "  'q' to exit"                                                            "\n"\
+  ""                                                                         "\n"\
+  "  's' select by regex"                                                    "\n"\
+  ""                                                                         "\n"\
+  "  'x' extract information from the title by regex"                        "\n"\
+  ""                                                                         "\n"\
+  "  ' ' toggle selection of the current item"                               "\n"\
+  ""                                                                         "\n"\
+  "  'k' selection up"                                                       "\n"\
+  "  'j' selection down"                                                     "\n"\
   ""
 
 

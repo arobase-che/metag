@@ -11,6 +11,9 @@ CFLAGS+=-std=gnu99
 
 all: $(PROG)
 
+debug: CFLAGS += -DDEBUG -g
+debug: $(PROG)
+
 $(PROG): main.c main.h $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(LIBS) -o $@ main.c $(OBJ_FILES)
 

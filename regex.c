@@ -14,11 +14,13 @@ static int compile_regex (regex_t * r, const char * regex_text)
     if (status != 0) {
 	char error_message[MAX_ERROR_MSG];
 	regerror (status, r, error_message, MAX_ERROR_MSG);
-        printf ("Regex error compiling '%s': %s\n",
+        #ifdef DEBUG
+        fprintf (stderr, "Regex error compiling '%s': %s\n",
                  regex_text, error_message);
-        return 1;
+        #endif
+        return 0;
     }
-    return 0;
+    return 1;
 }
 
 /*
@@ -28,9 +30,13 @@ static int compile_regex (regex_t * r, const char * regex_text)
 static int match_regex (const char* rS, const char * to_match, char* m2[], int nbR)
 {
     regex_t* r = malloc(sizeof *r);
-    compile_regex(r, rS);
+    if( !compile_regex(r, rS) ) {
+        return 0;
+    }
 
+    #ifdef DEBUG
     fprintf(stderr, "%d - %d\n", nbR, r->re_nsub);
+    #endif
 
     if( nbR != r->re_nsub && nbR > 0)
         return 0;
@@ -41,11 +47,17 @@ static int match_regex (const char* rS, const char * to_match, char* m2[], int n
     /* "N_matches" is the maximum number of matches allowed. */
     /* "M" contains the matches found. */
     int rs = regexec (r, to_match /* if only 1 match, set it to to_match */,
-                    nbR > 0 ? r->re_nsub+1: 0 /* nbMatch Max */, m /*  res */, 0);
+                    nbR > 0 ? r->re_nsub+1: 0 /* nbMatch Max */, m /*  res */, REG_NOTBOL | REG_NOTEOL);
+    #ifdef DEBUG
+    fprintf(stderr, "[%d]\n", rs);
+    #endif
     
     // regexec(&re, line, 2, rm, 0)
-    if( !rs )  {
+    if( rs )  {
+    #ifdef DEBUG
         fprintf(stderr,"<<%s>>\n", to_match);
+    #endif
+        return 0;
 //        fprintf(stderr,"Line: <<%.*s>>\n", (int)(m[0].rm_eo - m[0].rm_so), to_match + m[0].rm_so);
     }
 
@@ -54,7 +66,9 @@ static int match_regex (const char* rS, const char * to_match, char* m2[], int n
             m2[i-1] = malloc( (unsigned int)(m[i].rm_eo - m[i].rm_so) + 1);
             m2[i-1][m[i].rm_eo - m[i].rm_so] = 0;
             strncpy(m2[i-1], to_match+m[i].rm_so, m[i].rm_eo - m[i].rm_so);
+            #ifdef DEBUG
             fprintf(stderr,"Text: <<%.*s>>\n", (int)(m[i].rm_eo - m[i].rm_so), to_match + m[i].rm_so);
+            #endif
         }
     return !rs;
 
@@ -141,13 +155,13 @@ void regexXtract(itemC* it, const char* msg) {
     int nbR = strlen(tmp);
     tab = malloc( sizeof *tab * (nbR+1));
     if( match_regex(regexS, line, tab, nbR ) ) {
-#ifdef DEBUG
+        #ifdef DEBUG
         fprintf(stderr, "Hello");
-#endif
+        #endif
         for(int i = 0 ; i < nbR ; i++) {
-#ifdef DEBUG
+            #ifdef DEBUG
             fprintf(stderr, "<<%s>>\n", tab[i]);
-#endif
+            #endif
             switch(tmp[i]) {
                 case 't':
                     taglib_tag_set_title(it->info.tag, tab[i]);

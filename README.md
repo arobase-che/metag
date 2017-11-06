@@ -4,4 +4,4 @@ Metag
 A ncurses based metadata editor.
 
 
-![Screenshot](screenshot.png)
+![Screenshot](http://git.ache.one/metag/raw/master/screenshot.png)

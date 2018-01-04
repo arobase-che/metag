@@ -9,6 +9,8 @@
 
 void printTagInfoHeader();
 
+void printHelp();
+
 void printTagInfo(menuC* menu);
 
 void cleanmenu(menuC* menu);

@@ -216,6 +216,7 @@ int main(int argc, char* argv[]){
 
     printmenu(&menu);
     printTagInfoHeader();
+    printHelp();
     move(1,COLS/2);
     vline( ACS_VLINE, LINES-2)  ;
 

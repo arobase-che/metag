@@ -35,6 +35,23 @@ void printTagInfoHeader() {
     mvprintc(COLS/2+2, 7, "Comment  :",15);
     attrset( COLOR_PAIR( 0 ) | A_NORMAL);
 }
+void printHelp() {
+    attrset( COLOR_PAIR( COLOR_RED + 1) | A_BOLD);
+    mvprintc(COLS/2+2, 10, "j : Down",20);
+    mvprintc(COLS/2+2, 11, "k : Up",20);
+    mvprintc(COLS/2+2, 12, "et: Edit title",20);
+    mvprintc(COLS/2+2, 13, "ea: Edit artist",20);
+    mvprintc(COLS/2+2, 14, "eb: Edit album",20);
+    mvprintc(COLS/2+2, 15, "ey: Edit year",20);
+    mvprintc(COLS/2+2+24, 10, "en: Edit track N°",20);
+    mvprintc(COLS/2+2+24, 11, "et: Edit genre",20);
+    mvprintc(COLS/2+2+24, 12, "s : Regex selection",20);
+    mvprintc(COLS/2+2+24, 13, "x : Regex edition",20);
+    mvprintc(COLS/2+2+24, 14, "q : Quit",20);
+    attrset( COLOR_PAIR( 0 ) | A_NORMAL);
+}
+
+
 void printTagInfo(menuC* menu) {
     static int mustClear = 0;
     if( mustClear == 1 ) {
@@ -144,6 +161,7 @@ void resizeMain(menuC* menu) {
     menu->w =  COLS/2-1;
     printmenu(menu);
     printTagInfoHeader();
+    printHelp();
     printTagInfo(menu);
     printStatus();
     move(1,COLS/2);

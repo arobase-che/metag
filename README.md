@@ -4,7 +4,7 @@ Metag
 A ncurses based metadata editor.
 
 
-![Screenshot](http://git.ache.one/metag/raw/master/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/arobase-che/metag/master/screenshot.png)
 
 
-![Usage regex](http://git.ache.one/metag/raw/master/metag.gif)
+![Usage regex](https://raw.githubusercontent.com/arobase-che/metag/master/metag.gif)

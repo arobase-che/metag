@@ -98,6 +98,7 @@ void printmenu(menuC* menu) {
     int w = menu->w;
     itemC* it = menu->list;
     int s = menu->nbElem;
+    int i = 0;
 
     if( menu->hl < (menu->firstElem) ) {
         menu->firstElem-=menu->h/2;
@@ -116,7 +117,7 @@ void printmenu(menuC* menu) {
     }
 
 
-    for(int i = menu->firstElem ;  i < (h+menu->firstElem) && i < s ; i++) {
+    for(i = menu->firstElem ;  i < (h+menu->firstElem) && i < s ; i++) {
         int color = 0, attr = A_NORMAL;
         if( it[i].opt == 1 )
             color = COLOR_BLUE+1;
@@ -131,6 +132,10 @@ void printmenu(menuC* menu) {
         printw("%*s", w, " ");
         mvprintc(x,y++,it[i].cstr, w);
         attrset(0 | A_NORMAL);
+    }
+    for( ; i < h+menu->firstElem ; i++) {
+        move(y++,x);
+        printw("%*s", w, " ");
     }
 }
 void printStatus(void) {

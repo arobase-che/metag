@@ -110,6 +110,7 @@ void printc(char* fstrc, int max_length) {
                 printw("%.*s", toP, tmp);
                 tmp=NULL;
                 toP=0;
+                break;
             }
             switch( fstrc[i] ) {
                 case '$':

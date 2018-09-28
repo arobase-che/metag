@@ -3,6 +3,7 @@
  */
 
 #include "item.h"
+#include<errno.h>
 
 /*
  * Set of functions to manage a list of items (One file or directory is
@@ -40,13 +41,23 @@ void listdir(int option, itemC** m, int* s) {
     itemC* menu = NULL;
     struct dirent *entry;
 
-    if (!(dir = opendir(".")))
+
+    if (!(dir = opendir("."))) {
+        perror("opendir failled");
         return;
+    }
+    errno = 0;
 
     if (!(entry = readdir(dir)))
         return;
 
+
+
     do {
+        if(errno) {
+            break;
+        }
+
         if( entry->d_name[0] == '.' && !(option & HIDDEN) && strcmp(entry->d_name, "..") )
             continue;
 
@@ -57,12 +68,12 @@ void listdir(int option, itemC** m, int* s) {
         mvprintc(1,1,entry->d_name,COLS/2-5);
 #endif
 
-        refresh();
 
-//        fprintf(stderr, "%s\n", entry->d_name);
+
         menu = realloc(menu, ++nbitem * sizeof *menu);
 
         if (entry->d_type == DT_DIR) { 
+
             char* tmp = malloc( strlen(entry->d_name)+3);
             sprintf(tmp, "[%s]", entry->d_name);
             menu[nbitem-1].cstr = tmp;
@@ -71,6 +82,8 @@ void listdir(int option, itemC** m, int* s) {
             menu[nbitem-1].selected   = 0;
         }
         else {
+
+
             TagLib_File *file;
             TagLib_Tag *tag;
             const TagLib_AudioProperties *properties;
@@ -105,6 +118,7 @@ end:
     closedir(dir);
     *m = menu;
     *s = nbitem;
+    refresh();
 }
 
 

@@ -1,5 +1,5 @@
 /*
- * Ache - 2017-08-14 - GPLv3
+ * Ache - 2017-08-14 - GPLv3 or later
  */
 
 #include "wind.h"

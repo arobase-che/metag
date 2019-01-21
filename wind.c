@@ -19,7 +19,7 @@ void prepare(char* s) {
     refresh();
     strcpy(status, s);
     printStatus();
-    readline_n();
+    readline_n("");
     clear();
     curs_set(0);
 }

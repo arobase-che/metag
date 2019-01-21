@@ -55,15 +55,15 @@ void fail_exit(const char *msg) {
 }
 
 
-void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c);
+void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c, const char* str);
 
-void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c) {
+void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c, const char* str) {
     status[1]=c;
     printStatus();
     refresh();
     curs_set(2);
     move(LINES-1, 0);
-    readline_n();
+    readline_n(str);
     clear();
     curs_set(0);
     itemC* it = menu->list+menu->hl;
@@ -87,13 +87,15 @@ void edit_rl(menuC* menu,void func(TagLib_Tag *, const char*), int c) {
         }
     }
 }
-void edit_rl_int(menuC* menu,void func(TagLib_Tag *, unsigned int), int c) {
+void edit_rl_int(menuC* menu,void func(TagLib_Tag *, unsigned int), int c, int oldOne_int) {
     status[1]=c;
     printStatus();
     refresh();
     curs_set(2);
     move(LINES-1, 0);
-    readline_n();
+    char oldOne[5];
+    sprintf(oldOne, "%d", oldOne_int);
+    readline_n(oldOne);
     clear();
     curs_set(0);
     itemC* it = menu->list+menu->hl;
@@ -293,41 +295,43 @@ int main(int argc, char* argv[]){
 //                fprintf(stderr, "[%c]", c);
         }
         break;
-            case 'e':
+            case 'e': {
                 echo();
                 move(LINES-1,1);
-            switch(c) {
-                case 't':
-                    edit_rl(&menu,taglib_tag_set_title,'t');
-                    break;
-                case 'a':
-                    edit_rl(&menu,taglib_tag_set_artist,'a');
-                    break;
-                case 'b':
-                    edit_rl(&menu,taglib_tag_set_album,'b');
-                    break;
-                case 'y':
-                    edit_rl_int(&menu,taglib_tag_set_year,'b');
-                    break;
-                case 'n':
-                    edit_rl_int(&menu,taglib_tag_set_track,'b');
-                    break;
-                case 'g':
-                    edit_rl(&menu,taglib_tag_set_genre,'g');
-                    break;
-                case 'c':
-                    edit_rl(&menu,taglib_tag_set_comment,'c');
-                    break;
-                default:
-                    ;
-            }
-            comp = 0;
-            status[0] = status[1] = 0;
+                itemC* it = menu.list+menu.hl;
+                switch(c) {
+                    case 't':
+                        edit_rl(&menu,taglib_tag_set_title,'t', taglib_tag_title(it->info.tag));
+                        break;
+                    case 'a':
+                        edit_rl(&menu,taglib_tag_set_artist,'a', taglib_tag_artist(it->info.tag));
+                        break;
+                    case 'b':
+                        edit_rl(&menu,taglib_tag_set_album,'b', taglib_tag_album(it->info.tag));
+                        break;
+                    case 'y':
+                        edit_rl_int(&menu,taglib_tag_set_year,'y', taglib_tag_year(it->info.tag));
+                        break;
+                    case 'n':
+                        edit_rl_int(&menu,taglib_tag_set_track,'n', taglib_tag_track(it->info.tag));
+                        break;
+                    case 'g':
+                        edit_rl(&menu,taglib_tag_set_genre,'g', taglib_tag_genre(it->info.tag));
+                        break;
+                    case 'c':
+                        edit_rl(&menu,taglib_tag_set_comment,'c', taglib_tag_comment(it->info.tag));
+                        break;
+                    default:
+                        ;
+                }
+                comp = 0;
+                status[0] = status[1] = 0;
 
-            printmenu(&menu);
-            printTagInfoHeader();
-            printTagInfo(&menu);
-        break;
+                printmenu(&menu);
+                printTagInfoHeader();
+                printTagInfo(&menu);
+            }
+            break;
         }
         printStatus();
         printmenu(&menu);

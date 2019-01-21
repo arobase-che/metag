@@ -172,9 +172,14 @@ void init_readline(void)
 }
 
 
-void readline_n(void) {
+void readline_n(const char* str) {
     curs_set(2);
     resize();
+    for( ; *str ; str++ ) {
+        if( *str != '\n' && *str != '\f' && *str != KEY_RESIZE ) {
+            forward_to_readline(*str);
+        }
+    }
     while (!should_exit) {
         // Using getch() here instead would refresh stdscr, overwriting the
         // initial contents of the other windows on startup
@@ -196,6 +201,4 @@ void readline_n(void) {
     }
     should_exit = 0;
 }
-
-
 

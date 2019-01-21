@@ -15,7 +15,7 @@
 
 
 
-void readline_n(void);
+void readline_n(const char*);
 
 void init_readline(void);
 

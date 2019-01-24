@@ -13,6 +13,7 @@ static int match_regex (const char* rS, const char * to_match, char* m2[], int n
 void regexXtracts(menuC* it, const char* str);
 void regexXtract(itemC* it, const char* str);
 void regexSelection(menuC* menu, const char* msg);
+void regexSearch(menuC* menu, const char* msg);
 
 #endif
 

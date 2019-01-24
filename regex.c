@@ -117,6 +117,20 @@ void regexSelection(menuC* menu, const char* msg) {
         }
     }
 }
+void regexSearch(menuC* menu, const char* msg) {
+    for(int i = menu->hl + 1 ; i < menu->nbElem ; i++ ) {
+        if( match_regex(msg, menu->list[i].cstr, NULL, -1 ) ) {
+            menu->hl = i;
+            return;
+        }
+    }
+    for(int i = 0 ; i < menu->hl ; i++ ) {
+        if( match_regex(msg, menu->list[i].cstr, NULL, -1 ) ) {
+            menu->hl = i;
+            return;
+        }
+    }
+}
 void regexXtracts(menuC* menu, const char* msg) {
     int hasSelect = 0;
     for(int i = 0 ; i < menu->nbElem ; i++ ) {

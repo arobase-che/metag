@@ -15,11 +15,11 @@ extern WINDOW *cmd_win;
 extern WINDOW *sep_win;
 
 
-void prepare(char* s) {
+void prepare(const char* s, const char* placeholder) {
     refresh();
     strcpy(status, s);
     printStatus();
-    readline_n("");
+    readline_n(placeholder);
     clear();
     curs_set(0);
 }

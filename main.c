@@ -237,13 +237,13 @@ int main(int argc, char* argv[]){
             case 0:
         switch (c) {
             case 'B':
-            case 'j':
+            case 'j': // Up
                 if( menu.hl < menu.nbElem-1 )
                     menu.hl++;
                 printTagInfo(&menu);
                 break;
             case 'A':
-            case 'k':
+            case 'k': // Down
                 if( menu.hl > 0)
                     menu.hl--;
                 printTagInfo(&menu);
@@ -252,7 +252,7 @@ int main(int argc, char* argv[]){
                 break;
             case KEY_SRIGHT:
                 break;
-            case 'e':
+            case 'e': // Edit mode
                 if( !status[0] ) {
                     status[0] = 'e';
                     comp = 'e';
@@ -260,16 +260,21 @@ int main(int argc, char* argv[]){
                     status[0] = 0;
                 }
                 break;
-            case ' ':
+            case ' ': // Select under cursor mode
                 menu.list[menu.hl].selected = !menu.list[menu.hl].selected;
                 break;
-            case 's':
-                prepare("xs");
+            case 's': // Select by regex mode
+                prepare("xs", "");
                 regexSelection(&menu,msg_win_str);
                 resizeMain(&menu);
                 break;
-            case 'x':
-                prepare("x");
+            case '/': // Search mode
+                prepare("/", "");
+                regexSearch(&menu, msg_win_str);
+                resizeMain(&menu);
+                break;
+            case 'x': // Regex mode
+                prepare("x", "");
                 regexXtracts(&menu, msg_win_str);
                 resizeMain(&menu);
                 break;

@@ -19,7 +19,7 @@ void printmenu(menuC* menu);
 
 void printStatus(void);
 
-void prepare(char* s);
+void prepare(const char* s, const char* placeholder);
 
 void resize(void);
 void resizeMain(menuC* menu);

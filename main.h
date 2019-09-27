@@ -75,7 +75,7 @@ void fail_exit(const char *msg);
      _a > _b ? _a : _b; })
 
 
-#define VERSION_METAG        "Alpha"
+#define VERSION_METAG        "0.2"
 #define HELP_STRING_METAG    "Utilisation : metag [OPTION]..."               "\n"\
   "Editeur de tag mp3"                                                       "\n"\
   "Options :"                                                                "\n"\

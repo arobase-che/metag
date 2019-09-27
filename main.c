@@ -155,9 +155,8 @@ int main(int argc, char* argv[]){
 
         switch (c) {
             case 'v':
-            if( !strcmp(optlv[optIndex].name, "version") ) {
                 puts( VERSION_METAG );
-            }
+                return EXIT_SUCCESS;
             break;
 
             case 'h':
